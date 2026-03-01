@@ -1,16 +1,31 @@
 /*
- * Copyright (c) 2025 NS3-AI Python Binding Project
- * 
- * Authors: Ahmed Maksud <amaks002@ucr.edu>
- *          SHINE Lab, Texas State University
- *          PI: Marcelo Menezes De Carvalho
+ * Copyright (c) 2025 Texas State University
  *
- * PB Wrapper Functions Header
- * Contains only the function declarations needed for the RL simulation
- * 
- * This header provides a clean interface for RL integration without
- * requiring the main test functions. Designed for modularity and
- * easy integration with existing NS-3 applications.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+ * PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+ * Texas State University
+ */
+
+/**
+ * @file pb-wrapper.h
+ * @brief Wrapper class for NS3-AI Python binding integration
+ *
+ * Provides a clean, class-based interface for RL / AI integration
+ * without requiring the verbose core test functions. Designed for
+ * modularity and easy integration with existing NS-3 applications.
  */
 
 #ifndef PB_WRAPPER_H

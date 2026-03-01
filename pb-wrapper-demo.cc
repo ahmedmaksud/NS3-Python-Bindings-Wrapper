@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 NS3-AI Python Binding Project
+ * Copyright (c) 2025 Texas State University
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,15 +14,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Ahmed Maksud <amaks002@ucr.edu>
- *          SHINE Lab, Texas State University  
- *          PI: Marcelo Menezes De Carvalho
+ * Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+ * PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+ * Texas State University
+ */
+
+/**
+ * @file pb-wrapper-demo.cc
+ * @brief Demonstration of PBWrapper class for NS3-AI communication
  *
- * Python Binding Wrapper Demo - C++ Side
- * 
- * Demonstrates usage of pb-wrapper.h/cc functions instead of pb-core.h/cc
- * This shows how to integrate the wrapper functions into existing NS-3 applications
- * without the verbose logging and test code from pb-core.cc
+ * Shows how to integrate the wrapper functions into existing NS-3
+ * applications without the verbose logging from pb-core.cc.
  */
 
 #include "pb-wrapper.h"
@@ -45,7 +47,6 @@ NS_LOG_COMPONENT_DEFINE("PythonBinding_WrapperDemo");
 
 // ===========================
 // Wrapper Demo Main Function
-// Author: Ahmed Maksud (SHINE Lab, Texas State University)
 // ===========================
 int
 main(int argc, char* argv[])
@@ -66,7 +67,7 @@ main(int argc, char* argv[])
 
     std::cout << "\033[32m========== Python Binding Wrapper Demo ==========\033[0m" << std::endl;
     std::cout << "\033[33mDemonstrating new PBWrapper class usage\033[0m" << std::endl;
-    std::cout << "\033[33mImplemented by Ahmed Maksud (SHINE Lab, Texas State University)\033[0m" << std::endl;
+    std::cout << "\033[33mImplemented\033[0m" << std::endl;
     std::cout << "\033[33mUsing consistent wrapper pattern\033[0m" << std::endl;
 
     // === INITIALIZE WRAPPER USING NEW CLASS-BASED APPROACH ===
@@ -77,7 +78,7 @@ main(int argc, char* argv[])
     // Enable consistent CSV logging
     if (enableLogging)
     {
-        pbWrapper->EnableLogging(true, "contrib/ai/examples/MobiCom/python_bindings/pb-wrapper-demo-log.csv");
+        pbWrapper->EnableLogging(true, "contrib/ai/examples/pb-wrapper/pb-wrapper-demo-log.csv");
     }
     
     // Initialize the wrapper
@@ -208,7 +209,7 @@ main(int argc, char* argv[])
     std::cout << "\033[33m✅ Consistent wrapper pattern implemented!\033[0m" << std::endl;
     std::cout << "\033[33m✅ CSV logging enabled for analysis!\033[0m" << std::endl;
     std::cout << "\033[33m✅ All 23 environment + 9 action variables handled!\033[0m" << std::endl;
-    std::cout << "\033[33mWrapper implementation by Ahmed Maksud (SHINE Lab, Texas State University)\033[0m" << std::endl;
+    std::cout << "\033[33mWrapper implementation\033[0m" << std::endl;
 
     std::cout << "\n\033[34m=== FINAL STATISTICS ===\033[0m" << std::endl;
     std::cout << "\033[36m• Total Communications: " << totalTx << " TX, " << totalRx << " RX\033[0m" << std::endl;
@@ -216,12 +217,12 @@ main(int argc, char* argv[])
     
     if (enableLogging)
     {
-        std::cout << "\033[36m• CSV Log: contrib/ai/examples/MobiCom/python_bindings/pb-wrapper-demo-log.csv\033[0m" << std::endl;
+        std::cout << "\033[36m• CSV Log: contrib/ai/examples/pb-wrapper/pb-wrapper-demo-log.csv\033[0m" << std::endl;
     }
 
     std::cout << "\n\033[34m=== WRAPPER PATTERN BENEFITS ===\033[0m" << std::endl;
     std::cout << "\033[36m• Class-based: Object-oriented, clean lifecycle management\033[0m" << std::endl;
-    std::cout << "\033[36m• Consistent: Same interface as other MobiCom modules\033[0m" << std::endl;
+    std::cout << "\033[36m• Consistent: Same interface as other examples modules\033[0m" << std::endl;
     std::cout << "\033[36m• CSV Logging: Integrated data collection for analysis\033[0m" << std::endl;
     std::cout << "\033[36m• pb-wrapper.cc: Clean functions, NS_LOG only, easy integration\033[0m" << std::endl;
     std::cout << "\033[36m• Both handle identical 23+9 variable communication\033[0m" << std::endl;

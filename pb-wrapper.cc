@@ -1,15 +1,31 @@
 /*
- * Copyright (c) 2025 NS3-AI Python Binding Project
- * 
- * Authors: Ahmed Maksud <amaks002@ucr.edu>
- *          SHINE Lab, Texas State University
- *          PI: Marcelo Menezes De Carvalho
+ * Copyright (c) 2025 Texas State University
  *
- * Minimal PB Wrapper for RL Integration
- * Contains only the necessary functions without main() for clean integration
- * 
- * This implementation provides robust error handling and is designed
- * for integration with existing NS-3 applications that need AI control.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+ * PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+ * Texas State University
+ */
+
+/**
+ * @file pb-wrapper.cc
+ * @brief Wrapper implementation for NS3-AI Python binding integration
+ *
+ * Contains only the necessary wrapper functions (no main()) for clean
+ * integration with existing NS-3 applications that need AI control.
+ * Provides robust error handling and CSV logging.
  */
 
 #include "pb-wrapper.h"
@@ -62,7 +78,7 @@ bool
 PBWrapper::Initialize()
 {
     NS_LOG_FUNCTION(this);
-    NS_LOG_INFO("Initializing PB Wrapper by Ahmed Maksud (SHINE Lab, Texas State University)");
+    NS_LOG_INFO("Initializing PB Wrapper");
 
     if (m_initialized)
     {
@@ -259,7 +275,7 @@ Ns3AiMsgInterfaceImpl<PBEnvStruct, PBActStruct>*
 GetNs3AiInterface()
 {
     NS_LOG_FUNCTION_NOARGS();
-    NS_LOG_INFO("Initializing NS3-AI interface by Ahmed Maksud (SHINE Lab, Texas State University)");
+    NS_LOG_INFO("Initializing NS3-AI interface");
 
     // Use the simplified NS-3 AI interface approach
     auto interface = Ns3AiMsgInterface::Get();
@@ -269,7 +285,7 @@ GetNs3AiInterface()
 
     auto msgInterface = interface->GetInterface<PBEnvStruct, PBActStruct>();
     
-    NS_LOG_INFO("NS3-AI interface initialized successfully by Ahmed Maksud (SHINE Lab)");
+    NS_LOG_INFO("NS3-AI interface initialized successfully");
     return msgInterface;
 }
 

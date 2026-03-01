@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 NS3-AI Python Binding Project
+ * Copyright (c) 2025 Texas State University
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,12 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Ahmed Maksud <amaks002@ucr.edu>
- *          SHINE Lab, Texas State University  
- *          PI: Marcelo Menezes De Carvalho
+ * Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+ * PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+ * Texas State University
+ */
+
+/**
+ * @file pb-core.cc
+ * @brief Core implementation for NS3-AI Python binding communication
  *
- * Python Binding Core Implementation
- * 
  * Provides the main communication interface between NS-3 C++ simulation
  * and Python AI controllers for energy harvesting wireless networks.
  */
@@ -57,7 +60,9 @@ GetNs3AiInterface()
     std::cout
         << "\033[34m[C++ Init] Initializing Python binding AI communication interface...\033[0m"
         << std::endl;
-    std::cout << "\033[34m[C++ Init] Author: Ahmed Maksud (SHINE Lab, Texas State University)\033[0m" << std::endl;
+    std::cout
+        << "\033[34m[C++ Init] Author: Ahmed Maksud (SHINE Lab, Texas State University)\033[0m"
+        << std::endl;
 
     // Get singleton instance of NS3-AI interface manager
     auto interface = Ns3AiMsgInterface::Get();
@@ -72,7 +77,9 @@ GetNs3AiInterface()
     Ns3AiMsgInterfaceImpl<PBEnvStruct, PBActStruct>* msgInterface =
         interface->GetInterface<PBEnvStruct, PBActStruct>();
 
-    std::cout << "\033[32m[C++ Init] AI interface initialized successfully by Ahmed Maksud (SHINE Lab)\033[0m" << std::endl;
+    std::cout << "\033[32m[C++ Init] AI interface initialized successfully (SHINE "
+                 "Lab)\033[0m"
+              << std::endl;
     std::cout << "\033[32m[C++ Init] Ready for PBEnvStruct (23 vars) ↔ PBActStruct (9 vars) "
                  "communication\033[0m"
               << std::endl;
@@ -95,7 +102,7 @@ Send2Python(Ns3AiMsgInterfaceImpl<PBEnvStruct, PBActStruct>* msgInterface,
 {
     std::cout << "\033[1;36m[Send2Python] 🚀 Starting C++→Python communication cycle\033[0m"
               << std::endl;
-    std::cout << "\033[1;36m[Send2Python] Implementation by Ahmed Maksud (SHINE Lab)\033[0m" << std::endl;
+    std::cout << "\033[1;36m[Send2Python] Implementation\033[0m" << std::endl;
 
     std::cout << "\033[36m[Send2Python] 📊 Environment data to be sent:\033[0m" << std::endl;
     std::cout << "\033[36m  • pos_x: " << env_struct.pos_x << ", pos_y: " << env_struct.pos_y
@@ -187,10 +194,9 @@ Send2Python(Ns3AiMsgInterfaceImpl<PBEnvStruct, PBActStruct>* msgInterface,
 int
 main(int argc, char* argv[])
 {
-    std::cout << "\033[32m========== Python Binding C++ Core Test ==========\033[0m"
-              << std::endl;
+    std::cout << "\033[32m========== Python Binding C++ Core Test ==========\033[0m" << std::endl;
     std::cout << "\033[33mTesting Send2Python C++ wrapper function\033[0m" << std::endl;
-    std::cout << "\033[33mImplemented by Ahmed Maksud (SHINE Lab, Texas State University)\033[0m" << std::endl;
+    std::cout << "\033[33mImplemented\033[0m" << std::endl;
     std::cout << "\033[33mHandling all 23 environment and 9 action variables\033[0m" << std::endl;
 
     // === INITIALIZE INTERFACE USING WRAPPER FUNCTION ===
@@ -245,7 +251,7 @@ main(int argc, char* argv[])
         env_data.penalty_count = i / 10;
         env_data.coordination_active = i % 2;
 
-        std::cout << "\033[33m[C++ Main] Environment Data Summary (Ahmed Maksud - SHINE Lab):\033[0m" << std::endl;
+        std::cout << "\033[33m[C++ Main] Environment Data Summary:\033[0m" << std::endl;
         std::cout << "  \033[33m• STA " << env_data.sta_id << " at Position(" << env_data.pos_x
                   << "," << env_data.pos_y << ")\033[0m" << std::endl;
         std::cout << "  \033[33m• Energy Balance: " << env_data.energy_balance
@@ -306,6 +312,6 @@ main(int argc, char* argv[])
               << std::endl;
     std::cout << "\033[33mInterface initialization and wrapper functions working correctly!\033[0m"
               << std::endl;
-    std::cout << "\033[33mImplementation by Ahmed Maksud (SHINE Lab, Texas State University)\033[0m" << std::endl;
+    std::cout << "\033[33mImplementation\033[0m" << std::endl;
     return 0;
 }

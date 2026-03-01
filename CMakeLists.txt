@@ -92,12 +92,12 @@ add_custom_target(deploy_pb_python_bindings ALL
     # Copy Python AI core script
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     ${CMAKE_CURRENT_SOURCE_DIR}/pb-core.py
-    ${CMAKE_BINARY_DIR}/contrib/ai/examples/MobiCom/pb-core.py
+    ${CMAKE_BINARY_DIR}/contrib/ai/examples/pb-wrapper/pb-core.py
     
     # Copy Python wrapper demo script
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     ${CMAKE_CURRENT_SOURCE_DIR}/pb-wrapper-demo.py
-    ${CMAKE_BINARY_DIR}/contrib/ai/examples/MobiCom/pb-wrapper-demo.py
+    ${CMAKE_BINARY_DIR}/contrib/ai/examples/pb-wrapper/pb-wrapper-demo.py
     
     COMMENT "Deploying Python binding files by ${PROJECT_AUTHOR}"
     DEPENDS pb_interface_py
@@ -107,7 +107,7 @@ add_custom_target(deploy_pb_python_bindings ALL
 add_custom_command(TARGET pb_interface_py POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
     $<TARGET_FILE:pb_interface_py>
-    ${CMAKE_BINARY_DIR}/contrib/ai/examples/MobiCom/
+    ${CMAKE_BINARY_DIR}/contrib/ai/examples/pb-wrapper/
     COMMENT "Copying Python binding library to build directory by ${PROJECT_AUTHOR}"
 )
 

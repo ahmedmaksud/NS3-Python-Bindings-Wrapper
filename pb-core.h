@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 NS3-AI Python Binding Project
+ * Copyright (c) 2025 Texas State University
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -14,25 +14,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Authors: Ahmed Maksud <amaks002@ucr.edu>
- *          SHINE Lab, Texas State University
- *          PI: Marcelo Menezes De Carvalho
+ * Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+ * PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+ * Texas State University
+ */
+
+/**
+ * @file pb-core.h
+ * @brief Core data structures for NS3-AI Python binding communication
  *
- * Python Binding Core Module Header
+ * Defines the shared data structures used for bidirectional communication
+ * between NS-3 C++ simulation and Python AI controllers in energy
+ * harvesting wireless networks.
  *
- * This module provides the core data structures and function declarations
- * for bidirectional communication between NS-3 C++ simulation and Python
- * AI controllers in energy harvesting wireless networks.
- *
- * Key Features:
+ * Key components:
  * - PBEnvStruct: 23 environment variables describing network state
  * - PBActStruct: 9 action variables for network optimization
- * - Wrapper functions for simplified communication
- * - Compatible with ns3-ai framework for shared memory communication
+ * - Communication helper function declarations
  *
  * Communication Flow:
- * C++: action_struct = Send2Python(msgInterface, env_struct)  [Send env, receive action]
- * Python: env_struct = Send2Ns3(action_struct)  [Send action, receive env]
+ * C++:    action = Send2Python(msgInterface, env)   [send env, receive action]
+ * Python: env    = Send2Ns3(action)                 [send action, receive env]
  */
 
 #ifndef PB_CORE_H
@@ -58,8 +60,7 @@ class Ns3AiMsgInterfaceImpl;
  * and smart node coordination features.
  *
  * Compatible with ns3-ai for efficient shared memory communication.
- * 
- * Author: Ahmed Maksud (SHINE Lab, Texas State University)
+ *
  */
 struct PBEnvStruct
 {
@@ -96,8 +97,8 @@ struct PBEnvStruct
     double learning_rate;        // Current learning rate for adaptation
 
     // Additional variables for complete 23-variable structure
-    double reward_total;        // Total accumulated reward
-    uint32_t penalty_count;     // Number of penalties incurred
+    double reward_total;          // Total accumulated reward
+    uint32_t penalty_count;       // Number of penalties incurred
     uint32_t coordination_active; // Inter-node coordination active status (0/1)
 };
 
@@ -108,8 +109,7 @@ struct PBEnvStruct
  * for network parameter adjustment and energy management.
  *
  * All variables should be set by AI controller; use -1 for unavailable values.
- * 
- * Author: Ahmed Maksud (SHINE Lab, Texas State University)
+ *
  */
 struct PBActStruct
 {
@@ -134,7 +134,6 @@ struct PBActStruct
  * C++ interface initialization function
  * Creates and configures the NS3-AI message interface for Python binding communication
  *
- * Author: Ahmed Maksud (SHINE Lab, Texas State University)
  * Returns:
  *   msgInterface: Configured message interface for PBEnvStruct/PBActStruct communication
  */
@@ -143,7 +142,6 @@ ns3::Ns3AiMsgInterfaceImpl<PBEnvStruct, PBActStruct>* GetNs3AiInterface();
 /**
  * C++ wrapper function: Send environment to Python and receive action
  *
- * Author: Ahmed Maksud (SHINE Lab, Texas State University)
  * @param msgInterface: NS-3 AI message interface
  * @param env_struct: Environment data to send to Python (all 23 variables)
  * @return action_struct: Optimized actions received from Python (all 9 variables)

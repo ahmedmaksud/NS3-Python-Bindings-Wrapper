@@ -1,19 +1,35 @@
-#!/usr/bin/env python3.11
+#!/usr/bin/env python3
+# Copyright (c) 2025 Texas State University
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation;
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+# Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
+# PI: Marcelo Menezes De Carvalho <mmcarvalho@txstate.edu>
+# Texas State University
+
 """
 pb-core.py - Python Binding AI Controller
-Author: Ahmed Maksud <amaks002@ucr.edu>
-Lab: SHINE Lab, Texas State University
-PI: Marcelo Menezes De Carvalho
 
 This script demonstrates the Python side of NS3-AI communication for
-Energy-harvesting network optimization:
+energy-harvesting network optimization:
 - Receives network state data from C++ NS3 simulation
 - Applies AI optimization algorithms
 - Sends optimized control actions back to NS3 simulation
 
 Key Features:
 - Complete 23-variable environment handling
-- Complete 9-variable action generation  
+- Complete 9-variable action generation
 - Robust error handling and logging
 - Communication data logging for analysis
 - Modular Send2Ns3 wrapper function
@@ -23,9 +39,9 @@ import sys
 import os
 
 # Add NS3-AI python utilities to path using relative paths only
-# From: contrib/ai/examples/MobiCom/python_bindings/
+# From: contrib/ai/examples/pb-wrapper/
 # To:   contrib/ai/python_utils/
-sys.path.insert(0, os.path.join('..', '..', '..', 'python_utils'))
+sys.path.insert(0, os.path.join("..", "..", "python_utils"))
 
 import pb_interface_py as py_binding
 from ns3ai_utils import Experiment
@@ -38,6 +54,7 @@ import random
 # ANSI color codes for better visibility
 class Colors:
     """Color constants for terminal output formatting"""
+
     RESET = "\033[0m"
     RED = "\033[31m"
     GREEN = "\033[32m"
@@ -55,7 +72,6 @@ def print_author_info():
     """Print author information"""
     print(f"{Colors.BLUE}========================================{Colors.RESET}")
     print(f"{Colors.BLUE}  Python Binding AI Controller{Colors.RESET}")
-    print(f"{Colors.BLUE}  Author: Ahmed Maksud{Colors.RESET}")
     print(f"{Colors.BLUE}  Email: amaks002@ucr.edu{Colors.RESET}")
     print(f"{Colors.BLUE}  Lab: SHINE Lab, Texas State University{Colors.RESET}")
     print(f"{Colors.BLUE}  PI: Marcelo Menezes De Carvalho{Colors.RESET}")
@@ -65,14 +81,13 @@ def print_author_info():
 def print_action_details(action_struct):
     """
     Print action structure details in yellow
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
     """
-    print(f"{Colors.YELLOW}[Python Wrapper] Send2Ns3 sending action to C++ (Ahmed Maksud - SHINE Lab):")
-    
+    print(f"{Colors.YELLOW}[Python Wrapper] Send2Ns3 sending action to C++:")
+
     # Action data with streamlined formatting
     actions = [
         ("set_ApTx", "dBm", ".1f"),
-        ("beacon_interval_ms", "ms", ".1f"), 
+        ("beacon_interval_ms", "ms", ".1f"),
         ("twt_interval_sec", "sec", ".1f"),
         ("enable_smart_mode", "", ""),
         ("adaptation_threshold", "", ".2f"),
@@ -80,9 +95,9 @@ def print_action_details(action_struct):
         ("action_valid", "", ""),
         ("confidence", "", ".2f"),
         ("sta_target", "", ""),
-        ("exploration_flag", "", "")
+        ("exploration_flag", "", ""),
     ]
-    
+
     for name, unit, fmt in actions:
         value = action_struct.get(name, -1)
         if fmt:
@@ -91,43 +106,53 @@ def print_action_details(action_struct):
             formatted_val = str(value)
         unit_str = f" {unit}" if unit else ""
         print(f"  • {name}: {formatted_val}{unit_str}")
-    
+
     print(Colors.RESET, end="")
 
 
 def print_environment_details(env):
     """
     Print environment structure details in cyan
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
     """
-    print(f"{Colors.CYAN}[Python Wrapper] Send2Ns3 received environment from C++ (Ahmed Maksud - SHINE Lab):")
-    
+    print(f"{Colors.CYAN}[Python Wrapper] Send2Ns3 received environment from C++:")
+
     # Environment data with streamlined formatting
     env_data = [
         (f"pos_x: {env.pos_x:.1f}, pos_y: {env.pos_y:.1f}",),
         (f"distance: {env.distance:.1f}, sta_id: {env.sta_id}",),
         (f"dl_tp: {env.dl_tp:.1f}, ul_tp: {env.ul_tp:.1f}",),
         (f"get_ApTx: {env.get_ApTx:.1f}, now_sec: {env.now_sec:.1f}",),
-        (f"harvested_energy: {env.harvested_energy:.3f}, consumed_energy: {env.consumed_energy:.3f}",),
-        (f"energy_balance: {env.energy_balance:.3f}, output_enabled: {env.output_enabled}",),
-        (f"capacitor_voltage: {env.capacitor_voltage:.2f}, buffer_occupancy: {env.buffer_occupancy}",),
-        (f"buffer_overload: {env.buffer_overload}, packet_gen_rate: {env.packet_gen_rate:.1f}",),
-        (f"smart_mode_enabled: {env.smart_mode_enabled}, ai_confidence: {env.ai_confidence:.2f}",),
-        (f"adaptation_count: {env.adaptation_count}, learning_rate: {env.learning_rate:.3f}",),
+        (
+            f"harvested_energy: {env.harvested_energy:.3f}, consumed_energy: {env.consumed_energy:.3f}",
+        ),
+        (
+            f"energy_balance: {env.energy_balance:.3f}, output_enabled: {env.output_enabled}",
+        ),
+        (
+            f"capacitor_voltage: {env.capacitor_voltage:.2f}, buffer_occupancy: {env.buffer_occupancy}",
+        ),
+        (
+            f"buffer_overload: {env.buffer_overload}, packet_gen_rate: {env.packet_gen_rate:.1f}",
+        ),
+        (
+            f"smart_mode_enabled: {env.smart_mode_enabled}, ai_confidence: {env.ai_confidence:.2f}",
+        ),
+        (
+            f"adaptation_count: {env.adaptation_count}, learning_rate: {env.learning_rate:.3f}",
+        ),
         (f"reward_total: {env.reward_total:.2f}, penalty_count: {env.penalty_count}",),
-        (f"coordination_active: {env.coordination_active}",)
+        (f"coordination_active: {env.coordination_active}",),
     ]
-    
+
     for line in env_data:
         print(f"  • {line[0]}")
-    
+
     print(Colors.RESET, end="")
 
 
 def Send2Ns3(msgInterface, action_struct):
     """
     Python wrapper function: Send action to NS-3 and receive environment data
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
     NO FALLBACK VALUES - Missing values will be set to -1
 
     Communication Flow:
@@ -145,7 +170,7 @@ def Send2Ns3(msgInterface, action_struct):
         env_struct: Dictionary containing all PBEnvStruct fields
     """
     print(
-        f"{Colors.GREEN}[Send2Ns3] 🚀 Starting Python→C++ communication cycle (Ahmed Maksud - SHINE Lab){Colors.RESET}"
+        f"{Colors.GREEN}[Send2Ns3] 🚀 Starting Python→C++ communication cycle{Colors.RESET}"
     )
 
     # Print action details that will be sent later
@@ -156,30 +181,34 @@ def Send2Ns3(msgInterface, action_struct):
     print(
         f"{Colors.CYAN}[Send2Ns3] 📥 Waiting for environment data from C++...{Colors.RESET}"
     )
-    
+
     # CRITICAL: Check if simulation has finished BEFORE any blocking operations
     try:
         if msgInterface.PyGetFinished():
             print(
-                f"{Colors.RED}[Send2Ns3] ⚠️ Simulation finished signal received - exiting cleanly (Ahmed Maksud - SHINE Lab){Colors.RESET}"
+                f"{Colors.RED}[Send2Ns3] ⚠️ Simulation finished signal received - exiting cleanly{Colors.RESET}"
             )
             return None
     except Exception as e:
-        print(f"{Colors.RED}[Send2Ns3] ⚠️ Error checking simulation status (Ahmed Maksud - SHINE Lab): {e} - assuming finished{Colors.RESET}")
+        print(
+            f"{Colors.RED}[Send2Ns3] ⚠️ Error checking simulation status: {e} - assuming finished{Colors.RESET}"
+        )
         return None
-    
+
     # Only proceed with PyRecvBegin if simulation is still running
     try:
         msgInterface.PyRecvBegin()
     except Exception as e:
-        print(f"{Colors.RED}[Send2Ns3] ⚠️ Error in PyRecvBegin (simulation likely ended, Ahmed Maksud - SHINE Lab): {e}{Colors.RESET}")
+        print(
+            f"{Colors.RED}[Send2Ns3] ⚠️ Error in PyRecvBegin (simulation likely ended): {e}{Colors.RESET}"
+        )
         return None
 
     # Double-check if simulation finished during receive
     try:
         if msgInterface.PyGetFinished():
             print(
-                f"{Colors.RED}[Send2Ns3] ⚠️ Simulation finished during receive operation (Ahmed Maksud){Colors.RESET}"
+                f"{Colors.RED}[Send2Ns3] ⚠️ Simulation finished during receive operation{Colors.RESET}"
             )
             try:
                 msgInterface.PyRecvEnd()  # Try to clean up
@@ -187,25 +216,31 @@ def Send2Ns3(msgInterface, action_struct):
                 pass
             return None
     except Exception as e:
-        print(f"{Colors.RED}[Send2Ns3] ⚠️ Error checking simulation status after receive (Ahmed Maksud): {e}{Colors.RESET}")
+        print(
+            f"{Colors.RED}[Send2Ns3] ⚠️ Error checking simulation status after receive: {e}{Colors.RESET}"
+        )
         return None
 
     # Get environment data from C++
     print(
         f"{Colors.CYAN}[Send2Ns3] 📊 Receiving environment data from C++...{Colors.RESET}"
     )
-    
+
     try:
         env = msgInterface.GetCpp2PyStruct()
         if env is None:
-            print(f"{Colors.RED}[Send2Ns3] ⚠️ Received null environment data (Ahmed Maksud){Colors.RESET}")
+            print(
+                f"{Colors.RED}[Send2Ns3] ⚠️ Received null environment data{Colors.RESET}"
+            )
             return None
     except Exception as e:
-        print(f"{Colors.RED}[Send2Ns3] ⚠️ Error getting environment data (Ahmed Maksud): {e}{Colors.RESET}")
+        print(
+            f"{Colors.RED}[Send2Ns3] ⚠️ Error getting environment data: {e}{Colors.RESET}"
+        )
         return None
-        
+
     print(
-        f"{Colors.CYAN}[Send2Ns3] ✅ Environment data received successfully (Ahmed Maksud){Colors.RESET}"
+        f"{Colors.CYAN}[Send2Ns3] ✅ Environment data received successfully{Colors.RESET}"
     )
 
     # Print environment details
@@ -249,7 +284,7 @@ def Send2Ns3(msgInterface, action_struct):
         f"{Colors.CYAN}[Send2Ns3] 🔄 Finalizing environment data reception...{Colors.RESET}"
     )
     msgInterface.PyRecvEnd()
-    print(f"{Colors.CYAN}[Send2Ns3] ✅ Environment reception complete (Ahmed Maksud){Colors.RESET}")
+    print(f"{Colors.CYAN}[Send2Ns3] ✅ Environment reception complete{Colors.RESET}")
 
     # === SEND PHASE: Send action data to C++ ===
     print(
@@ -274,18 +309,17 @@ def Send2Ns3(msgInterface, action_struct):
     action.sta_target = action_struct.get("sta_target", -1)
     action.exploration_flag = action_struct.get("exploration_flag", -1)
 
-    print(f"{Colors.YELLOW}[Send2Ns3] 🚀 Sending action data to C++ (Ahmed Maksud)...{Colors.RESET}")
+    print(f"{Colors.YELLOW}[Send2Ns3] 🚀 Sending action data to C++...{Colors.RESET}")
     msgInterface.PySendEnd()
-    print(f"{Colors.YELLOW}[Send2Ns3] ✅ Action data sent successfully (Ahmed Maksud){Colors.RESET}")
+    print(f"{Colors.YELLOW}[Send2Ns3] ✅ Action data sent successfully{Colors.RESET}")
 
     # === STORE COMMUNICATION DATA FOR CSV LOGGING ===
     print(
-        f"{Colors.MAGENTA}[Send2Ns3] 💾 Storing communication data for logging (Ahmed Maksud)...{Colors.RESET}"
+        f"{Colors.MAGENTA}[Send2Ns3] 💾 Storing communication data for logging...{Colors.RESET}"
     )
     communication_record = {
         # Timestamp and metadata
         "timestamp": time.time(),
-        "author": "Ahmed Maksud (SHINE Lab, Texas State University)",
         # Received environment data (23 variables)
         "env_pos_x": env_struct["pos_x"],
         "env_pos_y": env_struct["pos_y"],
@@ -329,11 +363,10 @@ def Send2Ns3(msgInterface, action_struct):
 
 def initiate_experiment(
     experiment_name="pb_core_simulation",
-    ns3_path="../../../../..",  # Correct path to ns-3.44 root from python_bindings
+    ns3_path="../../../..",  # Correct path to ns-3.44 root from pb-wrapper
 ):
     """
     Initialize Python binding experiment and get message interface
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
 
     Args:
         experiment_name: Name of the NS3 C++ program to run
@@ -343,7 +376,7 @@ def initiate_experiment(
         msgInterface: Configured message interface for communication
     """
     print(
-        f"{Colors.BLUE}[Experiment Init] Starting Python binding experiment by Ahmed Maksud (SHINE Lab): {experiment_name}{Colors.RESET}"
+        f"{Colors.BLUE}[Experiment Init] Starting Python binding experiment: {experiment_name}{Colors.RESET}"
     )
 
     # Create experiment object to manage NS3-Python communication
@@ -354,10 +387,10 @@ def initiate_experiment(
         handleFinish=True,
     )
 
-    print(f"{Colors.CYAN}[Experiment Init] Launching NS3 simulation by Ahmed Maksud...{Colors.RESET}")
+    print(f"{Colors.CYAN}[Experiment Init] Launching NS3 simulation...{Colors.RESET}")
     msgInterface = exp.run(show_output=True)
     print(
-        f"{Colors.GREEN}[Experiment Init] NS3 simulation launched successfully by Ahmed Maksud{Colors.RESET}"
+        f"{Colors.GREEN}[Experiment Init] NS3 simulation launched successfully{Colors.RESET}"
     )
 
     return msgInterface, exp
@@ -366,7 +399,6 @@ def initiate_experiment(
 def generate_random_action():
     """
     Generate random action variables for testing
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
     Returns dictionary with all 9 action variables
     """
     action_struct = {
@@ -390,10 +422,9 @@ def generate_random_action():
 def main():
     """
     Main execution function for Python binding AI Controller
-    Author: Ahmed Maksud (SHINE Lab, Texas State University)
     """
-    print_author_info()
-    print(f"{Colors.BLUE}Python Binding AI Controller Starting by Ahmed Maksud (SHINE Lab)...{Colors.RESET}")
+    print_info()
+    print(f"{Colors.BLUE}Python Binding AI Controller Starting...{Colors.RESET}")
 
     # === EXPERIMENT INITIALIZATION WITH WRAPPER ===
     msgInterface, exp = initiate_experiment()
@@ -406,13 +437,13 @@ def main():
         while True:
             cycle_count += 1
             print(
-                f"\n{Colors.BLUE}========== Cycle {cycle_count} - Using Send2Ns3 Wrapper by Ahmed Maksud =========={Colors.RESET}"
+                f"\n{Colors.BLUE}========== Cycle {cycle_count} - Using Send2Ns3 Wrapper =========={Colors.RESET}"
             )
 
             # === GENERATE RANDOM ACTION VARIABLES ===
             action_struct = generate_random_action()
             print(
-                f"{Colors.MAGENTA}[Random Generation] Generated random action variables by Ahmed Maksud{Colors.RESET}"
+                f"{Colors.MAGENTA}[Random Generation] Generated random action variables{Colors.RESET}"
             )
             print(
                 f"  {Colors.MAGENTA}• Generated ApTx: {action_struct['set_ApTx']} dBm{Colors.RESET}"
@@ -429,22 +460,22 @@ def main():
 
             # === USE WRAPPER FUNCTION ===
             print(
-                f"{Colors.GREEN}[Main Loop] Calling Send2Ns3 wrapper by Ahmed Maksud...{Colors.RESET}"
+                f"{Colors.GREEN}[Main Loop] Calling Send2Ns3 wrapper...{Colors.RESET}"
             )
             env_struct = Send2Ns3(msgInterface, action_struct)
 
             # Check if simulation finished
             if env_struct is None:
-                print(f"{Colors.BLUE}[Main Loop] Simulation completed by Ahmed Maksud{Colors.RESET}")
+                print(f"{Colors.BLUE}[Main Loop] Simulation completed{Colors.RESET}")
                 break
 
             print(
-                f"{Colors.GREEN}[Main Loop] Send2Ns3 wrapper completed successfully by Ahmed Maksud{Colors.RESET}"
+                f"{Colors.GREEN}[Main Loop] Send2Ns3 wrapper completed successfully{Colors.RESET}"
             )
 
             # === POST-PROCESSING ===
             print(
-                f"{Colors.MAGENTA}[Analysis] Processing cycle {cycle_count} results by Ahmed Maksud:{Colors.RESET}"
+                f"{Colors.MAGENTA}[Analysis] Processing cycle {cycle_count} results:{Colors.RESET}"
             )
             energy_efficiency = (env_struct["dl_tp"] + env_struct["ul_tp"]) / max(
                 0.001, env_struct["consumed_energy"]
@@ -469,10 +500,10 @@ def main():
     except Exception as e:
         """
         Comprehensive error handling for debugging
-        Author: Ahmed Maksud
+
         """
         exc_type, exc_value, exc_traceback = sys.exc_info()
-        print(f"{Colors.RED}Exception occurred (Ahmed Maksud): {e}{Colors.RESET}")
+        print(f"{Colors.RED}Exception occurred: {e}{Colors.RESET}")
         print(f"{Colors.RED}Traceback:{Colors.RESET}")
         traceback.print_tb(exc_traceback)
         exit(1)
@@ -480,38 +511,36 @@ def main():
     else:
         # Save communication data when simulation completes successfully
         print(
-            f"{Colors.BLUE}[Save] Communication data length by Ahmed Maksud: {len(communication_data)}{Colors.RESET}"
+            f"{Colors.BLUE}[Save] Communication data length: {len(communication_data)}{Colors.RESET}"
         )
 
-        # Save comprehensive communication data to python_bindings directory
+        # Save comprehensive communication data to pb-wrapper directory
         if communication_data:
             import os
 
             comm_df = pd.DataFrame(communication_data)
             print(
-                f"{Colors.BLUE}[Save] Current working directory by Ahmed Maksud: {os.getcwd()}{Colors.RESET}"
+                f"{Colors.BLUE}[Save] Current working directory: {os.getcwd()}{Colors.RESET}"
             )
-            
+
             # Use relative path for CSV file in current directory
-            csv_file_path = "contrib/ai/examples/MobiCom/python_bindings/pb-core-log.csv"
-            
-            comm_df.to_csv(
-                csv_file_path, index=False
+            csv_file_path = "contrib/ai/examples/pb-wrapper/pb-core-log.csv"
+
+            comm_df.to_csv(csv_file_path, index=False)
+            print(
+                f"{Colors.GREEN}Communication data saved to {csv_file_path}{Colors.RESET}"
             )
             print(
-                f"{Colors.GREEN}Communication data saved to {csv_file_path} by Ahmed Maksud{Colors.RESET}"
+                f"{Colors.GREEN}Logged {len(communication_data)} communication cycles{Colors.RESET}"
             )
             print(
-                f"{Colors.GREEN}Logged {len(communication_data)} communication cycles by Ahmed Maksud{Colors.RESET}"
-            )
-            print(
-                f"{Colors.CYAN}Communication log contains all 23 environment + 9 action variables by Ahmed Maksud{Colors.RESET}"
+                f"{Colors.CYAN}Communication log contains all 23 environment + 9 action variables{Colors.RESET}"
             )
         else:
-            print(f"{Colors.RED}[Warning] No communication data to save! (Ahmed Maksud){Colors.RESET}")
+            print(f"{Colors.RED}[Warning] No communication data to save!{Colors.RESET}")
 
         # === DEMONSTRATION: Using Send2Ns3 Wrapper ===
-        print(f"\n{Colors.BLUE}=== DEMONSTRATING Send2Ns3 WRAPPER BY AHMED MAKSUD ==={Colors.RESET}")
+        print(f"\n{Colors.BLUE}=== DEMONSTRATING Send2Ns3 WRAPPER ==={Colors.RESET}")
         print(
             f"{Colors.CYAN}Usage: env_struct = Send2Ns3(msgInterface, action_struct){Colors.RESET}"
         )
@@ -521,12 +550,10 @@ def main():
         print(
             f"{Colors.CYAN}NO FALLBACK VALUES - Missing values set to -1{Colors.RESET}"
         )
-        print(
-            f"{Colors.CYAN}Implementation by Ahmed Maksud{Colors.RESET}"
-        )
+        print(f"{Colors.CYAN}Implementation{Colors.RESET}")
 
         print(
-            f"{Colors.GREEN}The Send2Ns3 wrapper by Ahmed Maksud automatically handles:{Colors.RESET}"
+            f"{Colors.GREEN}The Send2Ns3 wrapper automatically handles:{Colors.RESET}"
         )
         print(
             "  • All 23 environment variables (pos_x, pos_y, distance, sta_id, dl_tp, ul_tp, etc.)"
@@ -543,9 +570,9 @@ def main():
     finally:
         """
         Cleanup code that always executes
-        Author: Ahmed Maksud
+
         """
-        print(f"{Colors.BLUE}Finally exiting... (Ahmed Maksud){Colors.RESET}")
+        print(f"{Colors.BLUE}Finally exiting...{Colors.RESET}")
         del exp  # Clean up experiment object and shared memory
 
 
