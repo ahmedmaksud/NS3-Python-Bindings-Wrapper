@@ -70,7 +70,7 @@ def print_wrapper_info():
     """Print wrapper information"""
     print(f"{Colors.BLUE}========================================{Colors.RESET}")
     print(f"{Colors.BLUE}  Python Binding Wrapper Demo{Colors.RESET}")
-    print(f"{Colors.BLUE}  Email: amaks002@ucr.edu{Colors.RESET}")
+    print(f"{Colors.BLUE}  Email: ahmed.maksud@email.ucr.edu{Colors.RESET}")
     print(f"{Colors.BLUE}  Lab: SHINE Lab, Texas State University{Colors.RESET}")
     print(f"{Colors.BLUE}  PI: Marcelo Menezes De Carvalho{Colors.RESET}")
     print(f"{Colors.BLUE}  Purpose: Demonstrate wrapper functions{Colors.RESET}")

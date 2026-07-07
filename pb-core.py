@@ -72,7 +72,7 @@ def print_author_info():
     """Print author information"""
     print(f"{Colors.BLUE}========================================{Colors.RESET}")
     print(f"{Colors.BLUE}  Python Binding AI Controller{Colors.RESET}")
-    print(f"{Colors.BLUE}  Email: amaks002@ucr.edu{Colors.RESET}")
+    print(f"{Colors.BLUE}  Email: ahmed.maksud@email.ucr.edu{Colors.RESET}")
     print(f"{Colors.BLUE}  Lab: SHINE Lab, Texas State University{Colors.RESET}")
     print(f"{Colors.BLUE}  PI: Marcelo Menezes De Carvalho{Colors.RESET}")
     print(f"{Colors.BLUE}========================================{Colors.RESET}")

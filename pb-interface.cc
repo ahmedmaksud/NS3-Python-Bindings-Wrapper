@@ -192,7 +192,7 @@ PYBIND11_MODULE(pb_interface_py, m)
 
     // Module metadata
 
-    m.attr("__email__") = "amaks002@ucr.edu";
+    m.attr("__email__") = "ahmed.maksud@email.ucr.edu";
     m.attr("__lab__") = "SHINE Lab, Texas State University";
     m.attr("__pi__") = "Marcelo Menezes De Carvalho";
     m.attr("__version__") = "1.0.0";

@@ -4,7 +4,7 @@
 **PI:** Marcelo Menezes De Carvalho (mmcarvalho@txstate.edu)  
 **Institution:** Texas State University
 
-A Python binding interface for NS3-AI communication in energy harvesting wireless networks, providing seamless bidirectional data exchange between NS-3 C++ simulations and Python AI controllers.
+A Python binding interface for NS3-AI communication in energy harvesting wireless networks, providing bidirectional data exchange between NS-3 C++ simulations and Python AI controllers.
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
 [![NS3 Version](https://img.shields.io/badge/NS3-3.44-blue.svg)](https://www.nsnam.org/)
@@ -14,7 +14,7 @@ _For NS3-AI integration details, check [NS3-AI GitHub](https://github.com/hust-d
 
 > **Important**: This project requires the [NS3-NS3AI installation repository](https://github.com/ahmedmaksud/NS3-NS3AI--installation-and-tests.git) to be completed first. NS3 and NS3-AI must already be installed and working.
 
-> Also we will assume to use the same virtual env 'EHRL' as in the [NS3-NS3AI installation repository](https://github.com/ahmedmaksud/NS3-NS3AI--installation-and-tests.git) repository
+> It also assumes the same virtual environment ('EHRL') as the [NS3-NS3AI installation repository](https://github.com/ahmedmaksud/NS3-NS3AI--installation-and-tests.git).
 
 ## Installation and Setup
 

@@ -1,5 +1,5 @@
 # Python Bindings Module CMakeLists.txt
-# Author: Ahmed Maksud <amaks002@ucr.edu>
+# Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
 # Lab: SHINE Lab, Texas State University
 # PI: Marcelo Menezes De Carvalho
 # This module provides Python-C++ communication interface for NS3-AI integration
@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.10)
 
 # Project information
 set(PROJECT_AUTHOR "Ahmed Maksud")
-set(PROJECT_EMAIL "amaks002@ucr.edu")
+set(PROJECT_EMAIL "ahmed.maksud@email.ucr.edu")
 set(PROJECT_LAB "SHINE Lab, Texas State University")
 set(PROJECT_PI "Marcelo Menezes De Carvalho")
 set(PROJECT_DESCRIPTION "NS3-AI Python Binding Interface for Energy Harvesting Networks")

@@ -1,14 +1,11 @@
 # Python Bindings .gitignore
-# Author: Ahmed Maksud <amaks002@ucr.edu>
+# Author: Ahmed Maksud <ahmed.maksud@email.ucr.edu>
 
 # Build artifacts
 *.o
 *.so
 *.pyc
 __pycache__/
-*.egg-info/
-dist/
-build/
 
 # IDE files
 .vscode/
@@ -33,15 +30,9 @@ CMakeFiles/
 cmake_install.cmake
 Makefile
 
-# NS-3 build outputs
-*.exe
-*.dll
-*.dylib
-
 # Backup files
 *.bak
 *.backup
-*~
 
 # OS specific
 .DS_Store
